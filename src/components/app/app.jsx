@@ -3,6 +3,8 @@ import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 're
 import BoardView from '../../views/board/board.jsx';
 import AdminView from '../../views/admin/admin.jsx';
 
+import '../../assets/styles/common.scss';
+
 class App extends React.Component {
   render() {
     return (

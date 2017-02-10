@@ -21,11 +21,13 @@ class BoardView extends React.Component {
         var user = userSnapshot.val();
         var board = boardSnapshot.val();
         var userBoard = user.boards[boardId];
+        var completedCards = userBoard.completedCards || [];
 
         this.setState({
           currentUser: {
             key: userId,
             username: user.username,
+            fullName: user.fullName,
             score: userBoard.score
           },
           board : {
@@ -40,8 +42,9 @@ class BoardView extends React.Component {
               title: card.title,
               category: card.category,
               points: card.points || 0,
-              completed: true,
-              numberOfCompletions: userBoard.completedCards[key] || 0
+              completed: completedCards[key] ? true : false,
+              isIncremental: card.isIncremental || false,
+              numberOfCompletions: completedCards[key] || 0
             }
           })
         });

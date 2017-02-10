@@ -14,7 +14,12 @@ var config = {
       },
       {
         test:/\.(sass|scss)$/,
-        use: ['style-loader','css-loader?sourceMap','sass-loader?sourceMap']
+        //use: ['style-loader','css-loader?sourceMap','sass-loader?sourceMap']
+        use: ['style-loader','css-loader','sass-loader']
+      },
+      {
+        test: /\.(jpg|png)$/,
+        use: ['file-loader']
       }
     ]
   },

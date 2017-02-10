@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from '../icon/icon.jsx';
+import Card from '../card/card.jsx';
 import database from '../../api/database.js';
 
 import './board.scss';
@@ -7,30 +8,17 @@ import './board.scss';
 class Board extends React.Component {
   render() {
     var items = this.props.items.map((item) => {
-      return (
-        <li key={item.key} onClick={this.handleCardClick.bind(this, item)}>
-          {item.title} {item.completed.toString()} {item.numberOfCompletions}
-        </li>
-      );
+      return <Card
+        key={item.key}
+        card={item}
+        boardKey={this.props.board.key}
+        currentUser={this.props.currentUser} />
     })
     return (
-      <main className="board">
-           <ul>
-            {items}
-           </ul>
-      </main>
+      <div className="cards">
+        {items}
+       </div>
     );
-  }
-  handleCardClick(card) {
-    var userKey = this.props.currentUser.key;
-    var boardKey = this.props.board.key;
-    var cardKey = card.key;
-    var newScore = this.props.currentUser.score + card.points;
-    var updates = {
-      [`/users/${userKey}/boards/${boardKey}/completedCards/${cardKey}`]: card.numberOfCompletions + 1,
-      [`/users/${userKey}/boards/${boardKey}/score`]: newScore
-    };
-    return database.ref().update(updates);
   }
 }
 
