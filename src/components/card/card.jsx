@@ -1,4 +1,5 @@
 import React from 'react';
+import Icon from '../icon/icon.jsx';
 import database from '../../api/database.js';
 import './card.scss';
 
@@ -15,8 +16,12 @@ class Card extends React.Component {
         <div className="card-body">
             <div className="card-icon">
               <div className="card-icon-inner">
-                <span className="icon icon" aria-hidden="true"></span>
-                <span className="icon icon-check" aria-hidden="true"></span>
+                <span className="icon" aria-hidden="true">
+                  <Icon name={this.props.card.category.toLowerCase()} />
+                </span>
+                <span className="icon" aria-hidden="true">
+                  <Icon name="check" />
+                </span>
               </div>
               <span className="card-icon-ring"></span>
             </div>
@@ -28,28 +33,19 @@ class Card extends React.Component {
     )
   }
   handleCardClick() {
-    var userKey = this.props.currentUser.key;
-    var boardKey = this.props.boardKey;
-    var cardKey = this.props.card.key;
-    var newScore;
-    var count;
-    var updates = {};
-    if(this.props.card.isIncremental) {
+    let newScore;
+    let count;
+    let updates = {};
+    if(this.props.card.isIncremental || this.props.card.completed == false) {
       newScore = this.props.currentUser.score + this.props.card.points;
       count = this.props.card.numberOfCompletions + 1;
     }
     else {
-      if(this.props.card.completed == false) {
-        newScore = this.props.currentUser.score + this.props.card.points;
-        count = this.props.card.numberOfCompletions + 1;
-      }
-      else {
-        newScore = this.props.currentUser.score - this.props.card.points;
-        count = null;
-      }
+      newScore = this.props.currentUser.score - this.props.card.points;
+      count = null;
     }
-    updates[`/users/${userKey}/boards/${boardKey}/completedCards/${cardKey}`] = count;
-    updates[`/users/${userKey}/boards/${boardKey}/score`] = newScore;
+    updates[`/users/${this.props.currentUser.key}/boards/${this.props.boardKey}/completedCards/${this.props.card.key}`] = count;
+    updates[`/users/${this.props.currentUser.key}/boards/${this.props.boardKey}/score`] = newScore;
     return database.ref().update(updates);
   }
 }
