@@ -1,0 +1,20 @@
+{
+  "plugins": [
+    {
+      "removeAttrs": {
+        "attrs": [
+          "fill",
+          "id",
+          "opacity",
+          "class"
+        ]
+      }
+    },
+    {
+      "removeTitle": true
+    },
+    {
+      "removeStyleElement": true
+    }
+  ]
+}

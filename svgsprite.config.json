@@ -1,0 +1,17 @@
+{
+  "log": "info",
+  "mode": {
+    "symbol": {
+      "dest": "./",
+      "sprite": "dist/assets/icons.svg",
+      "render": {
+        "scss": {
+          "template": "src/assets/icons/sprite.template.scss",
+          "dest": "src/assets/icons/sprite.scss"
+        }
+      },
+      "prefix": ".icon__%s",
+      "dimensions": "-dims"
+    }
+  }
+}

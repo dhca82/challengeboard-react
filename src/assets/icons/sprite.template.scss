@@ -1,0 +1,6 @@
+{{#shapes}}
+{{#selector.dimensions}}{{expression}}{{/selector.dimensions}} {
+    height:1em;
+    width:{{width.outer}} / {{height.outer}} * 1em;
+}
+{{/shapes}}
