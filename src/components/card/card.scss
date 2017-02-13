@@ -35,7 +35,11 @@
         color:#735692;
     }
     .card-icon {
-        color:#00d2a9;
+      .icon {
+        .icon__svg {
+          fill:#00d2a9;
+        }
+      }
     }
     .card-icon-ring {
         border-color:#00d2a9;
@@ -103,6 +107,11 @@
         height:34px;
         display:inline-block;
         line-height:36px;
+        .icon__svg {
+          fill:#fff;
+          width:20px;
+          height:33px;
+        }
     }
     .icon-cardio {
         width:32px;

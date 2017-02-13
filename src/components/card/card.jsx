@@ -16,12 +16,8 @@ class Card extends React.Component {
         <div className="card-body">
             <div className="card-icon">
               <div className="card-icon-inner">
-                <span className="icon" aria-hidden="true">
                   <Icon name={this.props.card.category.toLowerCase()} />
-                </span>
-                <span className="icon" aria-hidden="true">
                   <Icon name="check" />
-                </span>
               </div>
               <span className="card-icon-ring"></span>
             </div>
