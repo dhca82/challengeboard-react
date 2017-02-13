@@ -42,6 +42,10 @@ class Card extends React.Component {
     }
     updates[`/users/${this.props.currentUser.key}/boards/${this.props.boardKey}/completedCards/${this.props.card.key}`] = count;
     updates[`/users/${this.props.currentUser.key}/boards/${this.props.boardKey}/score`] = newScore;
+    updates[`/board-users/${this.props.boardKey}/${this.props.currentUser.key}`] = {
+      score: newScore,
+      username: this.props.currentUser.username
+    };
     return database.ref().update(updates);
   }
 }
