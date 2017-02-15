@@ -6,8 +6,8 @@ import './icon.scss';
 class Icon extends React.Component {
   render() {
     return (
-      <span className="icon">
-        <svg aria-hidden="true" className={`icon__svg icon__${this.props.name}-dims`} dangerouslySetInnerHTML={this.getIconMarkup()}></svg>
+      <span className={this.props.visible ? `icon icon-${this.props.name}` : "icon--hidden"}>
+        <svg aria-hidden="true" className={`icon__svg icon-${this.props.name}__svg`} dangerouslySetInnerHTML={this.getIconMarkup()}></svg>
       </span>
     );
   }

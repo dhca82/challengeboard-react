@@ -20,19 +20,21 @@
 .header__actions {
   position:absolute;
   right:40px;
-  top:28px;
+  top:35px;
 }
 .header__actions__icon {
-  color:#4f3e63;
   background:none;
   padding:0;
-  font-size:22px;
-  position:relative;
   border:none;
-  .icon {
-    color:#4f3e63;
+  .icon__svg {
+    fill:#4f3e63;
+    width:20px;
+    height:20px;
+  }
+  .icon-cross__svg {
     width:18px;
-    text-align:center;
+    height:17px;
+    margin:2px 1px 1px;
   }
   &:focus,
   &:active {
@@ -40,15 +42,15 @@
   }
 }
 .header__actions__icon + .header__actions__icon {
-  margin-left:24px;
+  margin-left:27px;
   &:after {
     content: '';
     height: 24px;
     width: 1px;
     background: #eae3f1;
     position: absolute;
-    left: -14px;
-    top: 6px;
+    left: 33px;
+    top: -2px;
   }
 }
 .header__actions__icon--expanded {

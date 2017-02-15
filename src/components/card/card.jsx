@@ -16,14 +16,14 @@ class Card extends React.Component {
         <div className="card-body">
             <div className="card-icon">
               <div className="card-icon-inner">
-                  <Icon name={this.props.card.category.toLowerCase()} />
-                  <Icon name="check" />
+                  <Icon name={this.props.card.category.toLowerCase()} visible="true" />
+                  <Icon name="check" visible="true" />
               </div>
               <span className="card-icon-ring"></span>
             </div>
             <strong className="card-heading">{this.props.card.title}</strong>
             <strong className="card-count">{this.props.card.numberOfCompletions}</strong>
-            <footer className="card-meta">{this.props.card.points}</footer>
+            <footer className="card-meta">{this.props.card.points} poäng</footer>
           </div>
       </div>
     )
@@ -44,7 +44,8 @@ class Card extends React.Component {
     updates[`/users/${this.props.currentUser.key}/boards/${this.props.boardKey}/score`] = newScore;
     updates[`/board-users/${this.props.boardKey}/${this.props.currentUser.key}`] = {
       score: newScore,
-      username: this.props.currentUser.username
+      username: this.props.currentUser.username,
+      fullName: this.props.currentUser.fullName
     };
     return database.ref().update(updates);
   }

@@ -108,10 +108,16 @@
         height:34px;
         display:inline-block;
         line-height:36px;
+        vertical-align: top;
         .icon__svg {
           fill:#fff;
           width:20px;
           height:33px;
+        }
+        .icon-misc__svg {
+          height: 20px;
+          top: 6px;
+          position: relative;
         }
     }
     .icon-cardio {
@@ -127,7 +133,7 @@
     }
     .icon-misc {
         font-size:25px;
-        width:33px;
+        width:34px;
         line-height:34px;
     }
     &:hover .card-icon-inner {

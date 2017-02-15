@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../../components/header/header.jsx';
 import Board from '../../components/board/board.jsx';
+import Leaderboard from '../leaderboard/leaderboard.jsx';
 import database from '../../api/database.js';
 
 class BoardView extends React.Component {
@@ -9,8 +10,11 @@ class BoardView extends React.Component {
     this.state = {
       board: {},
       items:[],
-      currentUser: {}
+      currentUser: {},
+      leaderboardItems: [],
+      showLeaderboard: false
     };
+    this.toggleLeaderboard = this.toggleLeaderboard.bind(this);
   }
   componentDidMount() {
     var userId = '-KcACniavRnb5WMBgVZq';
@@ -51,14 +55,42 @@ class BoardView extends React.Component {
       });
     });
   }
-
   render() {
     return (
       <div>
-        <Header currentUser={this.state.currentUser} />
+        <Header currentUser={this.state.currentUser} handleToggleLeaderboard={this.toggleLeaderboard} isLeaderboardExpanded={this.state.showLeaderboard} />
         <Board items={this.state.items} board={this.state.board} currentUser={this.state.currentUser} handleCardClick={this.updateCard} />
+        <Leaderboard isVisible={this.state.showLeaderboard} items={this.state.leaderboardItems} />
       </div>
     );
+  }
+  toggleLeaderboard(e) {
+    e.preventDefault();
+    if(this.state.showLeaderboard) {
+      this.setState({ showLeaderboard: false });
+      database.ref('board-users/' + this.state.board.key).off();
+    }
+    else {
+      this.setState({ showLeaderboard: true });
+      this.fetchLeaderboardItemsAndAttachListener();
+    }
+  }
+  fetchLeaderboardItemsAndAttachListener() {
+    database.ref('board-users/' + this.state.board.key).orderByChild('score').limitToLast(10).on('value', (snapshot) => {
+      var leadboardSnapshot = snapshot.val();
+      var items = Object.keys(leadboardSnapshot).map((key) => {
+        var item = leadboardSnapshot[key];
+        return {
+          key: key,
+          score: item.score,
+          fullName: item.fullName,
+          slug: item.username
+        }
+      });
+      this.setState({
+        leaderboardItems: items
+      });
+    });
   }
 }
 
