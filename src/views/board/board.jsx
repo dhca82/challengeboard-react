@@ -2,6 +2,7 @@ import React from 'react';
 import Header from '../../components/header/header.jsx';
 import Board from '../../components/board/board.jsx';
 import Leaderboard from '../leaderboard/leaderboard.jsx';
+import Tray from '../tray/tray.jsx';
 import database from '../../api/database.js';
 
 class BoardView extends React.Component {
@@ -16,28 +17,87 @@ class BoardView extends React.Component {
     };
     this.toggleLeaderboard = this.toggleLeaderboard.bind(this);
   }
+  componentWillReceiveProps(nextProps) {
+    database.ref('/users/' + this.props.params.userId).off();
+    this.initBoard(nextProps);
+  }
   componentDidMount() {
-    var userId = '-KcACniavRnb5WMBgVZq';
-    var boardId = '-KcACo-fYZ52HlnT7KDV';
+    this.initBoard();
+  }
+  render() {
+    return (
+      <div>
+        <Header currentUser={this.state.currentUser} currentBoard={this.state.board} handleToggleLeaderboard={this.toggleLeaderboard} isLeaderboardExpanded={this.state.showLeaderboard} />
+        <Board items={this.state.items} board={this.state.board} currentUser={this.state.currentUser} handleCardClick={this.updateCard} />
+        <Leaderboard isVisible={this.state.showLeaderboard} items={this.state.leaderboardItems} />
+        <Tray isVisible={typeof this.props.params.userId === 'undefined'} currentBoard={this.state.board} />
+      </div>
+    );
+  }
 
+  initBoard(props) {
+    props = props || this.props;
+    var boardName = props.params.boardName;
+    firebase.auth().onAuthStateChanged((currentUser) => {
+      if(currentUser != null || typeof props.params.userId !== 'undefined') {
+        if(typeof props.params.userId !== 'undefined') {
+          console.log('Init board for url', props.params.userId);
+          this.initBoardForUser(props.params.userId, boardName);
+          return;
+        }
+        else {
+          console.log('Init board for auth');
+          this.initBoardForUser(currentUser.uid, boardName);
+          return;
+        }
+      }
+      this.initBoardWithoutUser(boardName);
+    });
+  }
+
+  initBoardWithoutUser(boardName) {
+    database.ref('/boards/' + boardName).once('value').then((snapshot) => {
+      var board = snapshot.val();
+      this.setState({
+        currentUser: {},
+        board : {
+          key: boardName,
+          name: boardName
+        },
+        items: Object.keys(board.cards).map((key) => {
+          var card = board.cards[key];
+          return {
+            key: key,
+            title: card.title,
+            category: card.category,
+            points: card.points || 0,
+            completed: false,
+            isIncremental: card.isIncremental || false,
+            numberOfCompletions: 0
+          }
+        })
+      });
+    });
+  }
+
+  initBoardForUser(userId, boardName) {
     database.ref('/users/' + userId).on('value', (userSnapshot) => {
-      database.ref('/boards/' + boardId).once('value').then((boardSnapshot) => {
+      database.ref('/boards/' + boardName).once('value').then((boardSnapshot) => {
         var user = userSnapshot.val();
         var board = boardSnapshot.val();
-        var userBoard = user.boards[boardId];
+        var userBoard = user.boards[boardName];
         var completedCards = userBoard.completedCards || [];
 
         this.setState({
           currentUser: {
             key: userId,
-            username: user.username,
+            username: userId,
             fullName: user.fullName,
             score: userBoard.score
           },
           board : {
-            key: boardId,
-            slug: board.slug,
-            name: board.name
+            key: boardName,
+            name: boardName
           },
           items: Object.keys(board.cards).map((key) => {
             var card = board.cards[key];
@@ -54,15 +114,6 @@ class BoardView extends React.Component {
         });
       });
     });
-  }
-  render() {
-    return (
-      <div>
-        <Header currentUser={this.state.currentUser} handleToggleLeaderboard={this.toggleLeaderboard} isLeaderboardExpanded={this.state.showLeaderboard} />
-        <Board items={this.state.items} board={this.state.board} currentUser={this.state.currentUser} handleCardClick={this.updateCard} />
-        <Leaderboard isVisible={this.state.showLeaderboard} items={this.state.leaderboardItems} />
-      </div>
-    );
   }
   toggleLeaderboard(e) {
     e.preventDefault();

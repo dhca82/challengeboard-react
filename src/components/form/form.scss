@@ -3,6 +3,11 @@
     position:relative;
     margin-bottom:10px;
 }
+.form__item--inline {
+  display:inline-block;;
+  margin:0 1em;
+  width:280px;
+}
 
 .form__item__textbox {
     border:0;
@@ -33,7 +38,7 @@
 input:-webkit-autofill {
     -webkit-box-shadow: 0 0 0px 1000px white inset;
 }
-.form__item__textbox--hasvalue + .form__item__textbox-placeholder:not(.fixed) {
+.form__item__textbox--hasvalue:not(.fixed) + .form__item__textbox-placeholder {
     transform:translateY(-27px);
     color:#00d2a9;
     //font-weight:700;

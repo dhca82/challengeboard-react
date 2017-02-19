@@ -10,15 +10,12 @@ class App extends React.Component {
   render() {
     return (
       <Router history={hashHistory}>
-
         <Route path="/admin" component={AdminView} />
+        <Route path="/(:boardName)/(:userId)" component={BoardView} />
+        <Route path="/(:boardName)" component={BoardView} />
         <Route path="/" component={RegisterView} />
       </Router>
     );
   }
 }
 export default App
-
-/*
-<Route path="/" component={BoardView} />
-*/

@@ -12,8 +12,8 @@ class Header extends React.Component {
     return (
       <header className="header">
           <div className="header__user">
-              {this.props.currentUser.fullName}
-              <span className="header__user__signedin"></span>
+              {this.props.currentUser.fullName ? this.props.currentUser.fullName : this.props.currentBoard.name}
+              {/*<span className="header__user__signedin"></span>*/}
           </div>
           <strong className="header__score" id="intro-score">{this.props.currentUser.score}</strong>
           <div className="header__actions">

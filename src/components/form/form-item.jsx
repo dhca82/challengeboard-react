@@ -6,7 +6,7 @@ class FormItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      elevateLabel: false,
+      className: 'form__item__textbox',
       value: ''
     }
     this.handleOnFocus = this.handleOnFocus.bind(this);
@@ -15,11 +15,12 @@ class FormItem extends React.Component {
   }
   render() {
     return (
-      <div className="form__item">
+      <div className={this.props.inline ? "form__item form__item--inline" : "form__item"}>
           <input
             type={this.props.type}
-            className={this.state.elevateLabel ? "form__item__textbox form__item__textbox--hasvalue" : "form__item__textbox"}
+            className={this.state.className}
             autoComplete="off"
+            autoFocus={this.props.autoFocus}
             onFocus={this.handleOnFocus}
             onBlur={this.handleOnBlur}
             onChange={this.handleOnChange}
@@ -33,18 +34,19 @@ class FormItem extends React.Component {
   }
   handleOnChange(e) {
     this.setState({
-      value: e.target.value
+      value: e.target.value,
+      className: e.target.value.length > 0 ? 'form__item__textbox form__item__textbox--hasvalue' : 'form__item__textbox form__item__textbox--hasvalue fixed'
     });
   }
-  handleOnFocus() {
+  handleOnFocus(e) {
     this.setState({
-      elevateLabel: true
+      className: e.target.value.length > 0 ? 'form__item__textbox form__item__textbox--hasvalue' : 'form__item__textbox form__item__textbox--hasvalue fixed'
     });
   }
   handleOnBlur() {
     if(this.state.value.length > 0) return;
     this.setState({
-      elevateLabel: false
+      className: 'form__item__textbox',
     });
   }
 }
