@@ -5,6 +5,13 @@ import Leaderboard from '../leaderboard/leaderboard.jsx';
 import Tray from '../tray/tray.jsx';
 import database from '../../api/database.js';
 
+
+
+
+
+
+
+
 class BoardView extends React.Component {
   constructor(props) {
     super(props);

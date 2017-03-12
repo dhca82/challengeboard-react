@@ -43,8 +43,8 @@ class Join extends React.Component {
       inner = (
         <div>
           <h2 className="tray__heading">Vill du gå med i den här brädan?</h2>
-          <button className="button button--secondary join-tray__button" onClick={this.handleJoinClick}>Registrera dig</button>
-          <button className="button join-tray__button" onClick={this.handleLoginClick}>Logga in</button>
+          <button className="button button--secondary join-tray__button" onClick={this.handleJoinClick}>Skapa konto</button>
+          <button className="button join-tray__button" onClick={this.handleLoginClick}>Med befintligt konto</button>
         </div>
       );
     }

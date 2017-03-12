@@ -1,54 +1,43 @@
 import React from 'react';
 import Icon from '../icon/icon.jsx';
-import database from '../../api/database.js';
+import ContextNav, { ContextNavItem } from '../contextnav/contextnav.jsx'
 import './card.scss';
 
-class Card extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleCardClick = this.handleCardClick.bind(this);
+function Card({card, onCardClick, handleDecrement}) {
+  let cardIcon;
+  if(card.isIncremental && card.numberOfCompletions > 0) {
+    cardIcon = <div className="card__icon__inner card__icon__inner--number">{card.numberOfCompletions}</div>
   }
-  render() {
-    var cardClassName = this.props.card.completed ? 'card card--complete' : 'card';
-    return (
-      <div className={cardClassName} role="button" onClick={this.handleCardClick}>
-        <div className="card-background"></div>
-        <div className="card-body">
-            <div className="card-icon">
-              <div className="card-icon-inner">
-                  <Icon name={this.props.card.category.toLowerCase()} visible="true" />
-                  <Icon name="check" visible="true" />
-              </div>
-              <span className="card-icon-ring"></span>
-            </div>
-            <strong className="card-heading">{this.props.card.title}</strong>
-            <strong className="card-count">{this.props.card.numberOfCompletions}</strong>
-            <footer className="card-meta">{this.props.card.points} poäng</footer>
-          </div>
+  else {
+    cardIcon = (
+      <div className="card__icon__inner">
+          <Icon name={card.category.toLowerCase()} visible="true" />
+          <Icon name="check" visible="true" />
       </div>
     )
   }
-  handleCardClick() {
-    let newScore;
-    let count;
-    let updates = {};
-    if(this.props.card.isIncremental || this.props.card.completed == false) {
-      newScore = this.props.currentUser.score + this.props.card.points;
-      count = this.props.card.numberOfCompletions + 1;
-    }
-    else {
-      newScore = this.props.currentUser.score - this.props.card.points;
-      count = null;
-    }
-    updates[`/users/${this.props.currentUser.key}/boards/${this.props.boardKey}/completedCards/${this.props.card.key}`] = count;
-    updates[`/users/${this.props.currentUser.key}/boards/${this.props.boardKey}/score`] = newScore;
-    updates[`/board-users/${this.props.boardKey}/${this.props.currentUser.key}`] = {
-      score: newScore,
-      username: this.props.currentUser.username,
-      fullName: this.props.currentUser.fullName
-    };
-    return database.ref().update(updates);
-  }
+
+  return (
+    <div className={card.completed ? 'card card--complete' : 'card'} role="button" onClick={onCardClick}>
+      <div className="card__background"></div>
+      <div className="card__body">
+          <div className="card__icon">
+            {cardIcon}
+            <span className="card__icon__ring"></span>
+          </div>
+          <div className="card__description">
+            <div className="card__description__meta">{card.points} poäng</div>
+            <strong className="card__description__title">{card.title}</strong>
+          </div>
+          <ContextNav className="card__context-nav">
+            {card.isIncremental && card.numberOfCompletions > 0 &&
+              <ContextNavItem text="Minska antal" handler={handleDecrement.bind(card)} />
+            }
+            <ContextNavItem text="Göm kort" handler={handleDecrement.bind(card)} />
+          </ContextNav>
+        </div>
+    </div>
+  )
 }
 
 export default Card;

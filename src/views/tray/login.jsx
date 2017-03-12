@@ -1,6 +1,5 @@
 import React from 'react';
 import FormItem from '../../components/form/form-item.jsx';
-import database from '../../api/database.js';
 import { hashHistory } from 'react-router';
 
 class Login extends React.Component {

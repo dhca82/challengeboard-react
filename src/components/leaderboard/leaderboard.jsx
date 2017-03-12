@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
-import database from '../../api/database.js';
 import './leaderboard.scss';
+import { toggleLeaderboard } from '../../actions/leaderboardActions.js';
+import { connect } from 'react-redux';
 
 class Leaderboard extends React.Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class Leaderboard extends React.Component {
     let leaderboardContainer;
     if(this.props.isVisible) {
       leaderboardContainer = [
-        <div key="leaderboard" className="leaderboard">
+        <div key="leaderboard" className={this.props.isFetching && this.props.items.length == 0 ? 'leaderboard leaderboard--loading' : 'leaderboard'}>
           <table className="leaderboard__result">
             <tbody>
               {items}
@@ -45,4 +46,13 @@ class Leaderboard extends React.Component {
     );
   }
 }
-export default Leaderboard;
+
+const mapStateToProps = (store) => {
+  return {
+    isVisible: store.leaderboard.isLeaderboardExpanded,
+    isFetching: store.leaderboard.isLeaderboardFetching,
+    items: store.leaderboard.items || []
+  }
+}
+
+export default connect(mapStateToProps)(Leaderboard);

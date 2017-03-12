@@ -1,6 +1,8 @@
 import React from 'react';
 import FormItem from '../../components/form/form-item.jsx';
-import database from '../../api/database.js';
+import { createUserAndAddToBoard } from '../../actions/authActions.js';
+import { connect } from 'react-redux';
+import { hashHistory } from 'react-router';
 
 class Register extends React.Component {
   constructor(props) {
@@ -25,28 +27,22 @@ class Register extends React.Component {
     var email = form.elements['email'].value;
     var fullName = form.elements['fullname'].value;
     var password = form.elements['password'].value;
-    firebase.auth().createUserWithEmailAndPassword(email, password).then((authUser) => {
-
-      var boardUser = {
-        fullName: fullName,
-        score:0,
-      }
-
-      var updates = {
-        [`board-users/${this.props.currentBoard.name}/${authUser.uid}`]: boardUser,
-        [`users/${authUser.uid}/fullName`]: fullName,
-        [`users/${authUser.uid}/boards/${this.props.currentBoard.name}`]: { score:0 }
-      };
-      database.ref().update(updates).then(()=> {
-
-      });
-
-    }).catch((error) => {
-      var errorCode = error.code;
-      var errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-    });
+    this.props.createUserAndAddToBoard(this.props.boardKey, email, password, fullName);
   }
 }
 
-export default Register;
+const mapStateToProps = (state) => {
+  return {
+    boardKey: state.board.boardKey
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    createUserAndAddToBoard: (board, email, password, fullName) => {
+      dispatch(createUserAndAddToBoard(board, email, password, fullName));
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
