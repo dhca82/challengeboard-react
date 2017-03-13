@@ -30,6 +30,12 @@ const receiveApplicationError = (message) => {
   }
 }
 
+export const clearApplicationError = () => {
+  return {
+    type: 'CLEAR_ERROR'
+  }
+}
+
 export const authenticateUser = (email, password) => (dispatch, getState) => {
   firebase.auth().signInWithEmailAndPassword(email, password).then((user) => {
     dispatch(signInSuccessAction(user));

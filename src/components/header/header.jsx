@@ -14,7 +14,6 @@ class Header extends React.Component {
   render() {
     return (
       <header className="header">
-          {this.props.errorMessage}
           <div className="header__title">
               <h1 className="header__title__board">
                 {this.props.boardName}
@@ -48,8 +47,7 @@ const mapStateToProps = (store) => {
     boardName: store.board.boardName,
     boardUserFullName: store.board.boardUserFullName || '10 medlemmar',
     score: store.board.score,
-    isAuthenticated: store.auth.authenticated,
-    errorMessage: store.application.errorMessage
+    isAuthenticated: store.auth.authenticated
   }
 }
 

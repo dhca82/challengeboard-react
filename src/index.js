@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Board from './components/board/board.jsx';
 import Start from './views/start/index.jsx';
-import SignIn from './views/signin/signin.jsx';
+import SignIn from './views/signin';
 import Register from './views/register/register.jsx';
 import { Provider } from 'react-redux';
 import { Router, Route, hashHistory } from 'react-router'
@@ -16,8 +16,9 @@ var routes = (
     <Route path="/" component={Start} />
     <Route path="/signin" component={SignIn} />
     <Route path="/register" component={Register} />
-    <Route path="/(:boardName)/(:userId)" component={Board} />
+    <Route path="/(:boardName)/signin" component={SignIn} />
     <Route path="/(:boardName)" component={Board} />
+    <Route path="/(:boardName)/(:userId)" component={Board} />
   </Router>
   /*<Router history={hashHistory}>
      <Route path="/" component={Board}>

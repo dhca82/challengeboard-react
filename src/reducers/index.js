@@ -10,6 +10,11 @@ const application = (state = {}, {type, payload}) => {
         ...state,
         errorMessage: payload
       }
+    case 'CLEAR_ERROR':
+      return {
+        ...state,
+        errorMessage: null
+      }
     default:
       return state;
   }

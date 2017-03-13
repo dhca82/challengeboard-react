@@ -7,11 +7,13 @@ const auth = (state = { authenticated: false }, { type, payload}) => {
         username: payload
       }
     case 'SIGN_OUT_SUCCESS':
-    return {
-      ...state,
-      authenticated:false,
-      username: null
-    }
+      return {
+        ...state,
+        authenticated:false,
+        username: null
+      }
+    case 'CREATE_USER_FAIL':
+      return state;
     default:
       return state;
   }
