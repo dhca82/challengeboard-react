@@ -1,4 +1,4 @@
-const board = (state = { items: [] }, action) => {
+const board = (state = { cards: [] }, action) => {
   console.log(action.type)
   switch(action.type) {
     case 'RECEIVE_BOARD':
@@ -6,7 +6,7 @@ const board = (state = { items: [] }, action) => {
         ...state,
         boardName: action.board.name,
         boardKey: action.key,
-        items: Object.keys(action.board.cards).map((key) => {
+        cards: Object.keys(action.board.cards).map((key) => {
           var card = action.board.cards[key];
           return {
             key,
@@ -26,7 +26,7 @@ const board = (state = { items: [] }, action) => {
         ...state,
         user: action.user,
         score: action.score,
-        items: state.items.map((item) => {
+        cards: state.cards.map((item) => {
           return {
             ...item,
             completed: completedCards[item.key] ? true : false,

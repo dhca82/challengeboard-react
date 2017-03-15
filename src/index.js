@@ -1,42 +1,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Board from './components/board/board.jsx';
-import Start from './views/start/index.jsx';
-import SignIn from './views/signin';
-import Register from './views/register/register.jsx';
+import { render } from 'react-dom'
 import { Provider } from 'react-redux';
 import { Router, Route, hashHistory } from 'react-router'
 import store from './store/store.js';
+import { boardRoutes } from './routes/board';
 
 import './assets/styles/common.scss';
 import './assets/styles/button.scss';
 
-var routes = (
-  <Router history={hashHistory}>
-    <Route path="/" component={Start} />
-    <Route path="/signin" component={SignIn} />
-    <Route path="/register" component={Register} />
-    <Route path="/(:boardName)/signin" component={SignIn} />
-    <Route path="/(:boardName)" component={Board} />
-    <Route path="/(:boardName)/(:userId)" component={Board} />
-  </Router>
-  /*<Router history={hashHistory}>
-     <Route path="/" component={Board}>
-       <Route path=":boardName" component={Board}>
-         <Route path=":userId" component={Board} />
-       </Route>
-     </Route>
-   </Router>*/
+render(
+  <Provider store={store}>
+    <Router history={hashHistory}>
+      {boardRoutes}
+    </Router>
+  </Provider>,
+  document.getElementById('app')
 );
-
-const render = () => {
-  ReactDOM.render(
-    <Provider store={store}>
-        {routes}
-    </Provider>,
-    document.getElementById('app')
-  );
-}
-
-store.subscribe(render);
-render();

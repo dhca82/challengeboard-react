@@ -20,6 +20,19 @@
     cursor:pointer;
 }
 
+.card__context-nav {
+  position: absolute;
+  top: 36px;
+  right: 22px;
+
+}
+.card--complete {
+  .context-nav__trigger {
+    svg {
+      fill:#c1adea;
+    }
+  }
+}
 
 
 .card--complete {

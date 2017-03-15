@@ -1,7 +1,7 @@
 import React from 'react';
-import Icon from '../icon/icon.jsx';
-import ContextNav, { ContextNavItem } from '../contextnav/contextnav.jsx'
-import './card.scss';
+import Icon from '../../../components/icon/icon.jsx';
+import ContextNav, { ContextNavItem } from '../../../components/contextnav/contextnav.jsx'
+import './styles/card.scss';
 
 function Card({card, onCardClick, handleDecrement}) {
   let cardIcon;
