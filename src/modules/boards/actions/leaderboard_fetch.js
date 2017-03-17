@@ -11,10 +11,10 @@ const hideLeaderboard = () => {
   }
 }
 
-const receiveLeaderboard = (leaderboard) => {
+const receiveLeaderboard = (items) => {
   return {
     type: 'RECEIVE_LEADERBOARD',
-    leaderboard
+    payload: items
   }
 }
 
@@ -39,7 +39,16 @@ export const toggleLeaderboard = () => (dispatch, getState) => {
 const startLeaderboardWatcher = (board) => (dispatch) => {
   dispatch(requestLeaderboard());
   database.ref(`/leaderboards/${board}`).orderByChild('score').limitToLast(10).on('value', (snap) => {
-    dispatch(receiveLeaderboard(snap.val()));
+    let items = [];
+    snap.forEach((child) => {
+      let item = child.val();
+      items.push({
+        key: child.key,
+        score: item.score,
+        fullName: item.fullName,
+      });
+    });
+    dispatch(receiveLeaderboard(items.reverse()));
   });
 }
 

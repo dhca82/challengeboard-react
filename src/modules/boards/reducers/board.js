@@ -1,4 +1,4 @@
-const board = (state = { cards: [] }, action) => {
+const board = (state = { cards: [], memberCount: 0 }, action) => {
   console.log(action.type)
   switch(action.type) {
     case 'RECEIVE_BOARD':
@@ -18,7 +18,10 @@ const board = (state = { cards: [] }, action) => {
             numberOfCompletions: 0
           }
         }),
-        boardUserFullName: null
+        boardUserFullName: null,
+        memberCount: action.board.memberCount,
+        user: null,
+        score: 0
       }
     case 'BOARD_UPDATED_WITH_USER_DATA':
       let completedCards = action.completedCards || [];

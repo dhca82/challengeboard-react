@@ -7,7 +7,7 @@ import { authenticateUser } from '../../../modules/users/actions/user_auth.js';
 const mapStateToProps = (store) => {
   return {
     boardTitle: store.board.boardName,
-    activeMemberTitle: store.board.boardUserFullName || '10 medlemmar',
+    activeMemberTitle: store.board.boardUserFullName || `${store.board.memberCount} medlemmar`,
     score: store.board.score,
     isAuthenticated: store.auth.authenticated
   }

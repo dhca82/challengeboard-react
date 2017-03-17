@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { fetchBoard } from '../../../modules/boards/actions/board_fetch.js';
 import { toggleCard, decrementNumberOfCompletions } from '../../../modules/boards/actions/card_update.js';
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     fetchBoard: (boardName, userId) => {
       dispatch(fetchBoard(boardName, userId));

@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import Link from '../../../components/link/Link.js';
 import './styles/leaderboard.scss';
 
-function Leaderboard({items, isFetching, isExpanded}) {
+function Leaderboard({boardKey, items, isFetching, isExpanded, toggleLeaderboard}) {
   return (
     <ReactCSSTransitionGroup
       component="div"
@@ -30,10 +31,11 @@ function Leaderboard({items, isFetching, isExpanded}) {
 
   function renderItems() {
     return items.map((item, index) => {
+      var path = `${boardKey}/${item.key}`
       return (
         <tr key={index}>
           <td>{index+1}</td>
-          <td>{item.fullName}</td>
+          <td><Link path={path} onClick={toggleLeaderboard}>{item.fullName}</Link></td>
           <td>{item.score}</td>
         </tr>
       )

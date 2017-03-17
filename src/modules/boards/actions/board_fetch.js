@@ -30,15 +30,25 @@ export const clearBoardUserDetails = () => {
   }
 }
 
-export const fetchBoard = (board, user) => (dispatch) => {
-  database.ref(`boards/${board}`).once('value').then((snap) => {
+export const fetchBoard = (boardId, userId) => (dispatch, getState) => {
+  if(getState().board.boardKey == boardId && userId) {
+    dispatch(switchUser(userId))
+    return;
+  }
+  database.ref(`boards/${boardId}`).once('value').then((snap) => {
     dispatch(stopCurrentBoardWatcher());
-    dispatch(receiveBoard(board, snap.val()));
-    if(user) {
-      dispatch(startBoardWatcher(board, user));
-      dispatch(fetchBoardUserDetails(user));
+    dispatch(receiveBoard(boardId, snap.val()));
+    if(userId) {
+      dispatch(startBoardWatcher(boardId, userId));
+      dispatch(fetchBoardUserDetails(userId));
     }
   });
+}
+
+const switchUser = (userId) => (dispatch, getState) => {
+  dispatch(stopCurrentBoardWatcher());
+  dispatch(startBoardWatcher(getState().board.boardKey, userId));
+  dispatch(fetchBoardUserDetails(userId));
 }
 
 export const fetchBoardUserDetails = (user) => (dispatch) => {

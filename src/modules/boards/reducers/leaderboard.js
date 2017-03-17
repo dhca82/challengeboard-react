@@ -2,8 +2,8 @@ const leaderboard = (state = {
   isLeaderboardExpanded: false,
   isLeaderboardFetching: false,
   items: []
- }, action) => {
-  switch(action.type) {
+}, {type, payload}) => {
+  switch(type) {
     case 'SHOW_LEADERBOARD':
       return {
         ...state,
@@ -20,15 +20,7 @@ const leaderboard = (state = {
       return {
         ...state,
         isLeaderboardFetching: false,
-        items: Object.keys(action.leaderboard).map((key) => {
-          const item = action.leaderboard[key];
-          return {
-            key: key,
-            score: item.score,
-            fullName: item.fullName,
-            slug: item.username
-          }
-        })
+        items: payload
       }
     default: return state;
   }
