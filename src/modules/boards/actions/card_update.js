@@ -7,8 +7,8 @@ export const decrementNumberOfCompletions = (card) => (dispatch) => {
 export const toggleCard = (card, increment = 1) => (dispatch, getState) => {
   let state = getState();
 
-  if(!state.board.user) return false;
-  
+  if(state.board.user != state.auth.username || state.auth.isAuthenticated) return;
+
   let user = state.board.user;
   let score = state.board.score;
   let board = state.board.boardKey;

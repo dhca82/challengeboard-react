@@ -9,7 +9,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     fetchBoard: (boardName, userId) => {
       dispatch(fetchBoard(boardName, userId));
     },
-    onCardClick: (card) => {
+    toggleCard: (card) => {
       dispatch(toggleCard(card));
     },
     onDecrement: (card) => {

@@ -22,8 +22,17 @@ class ContextNav extends React.Component {
         return item;
       });
     }
-    return (
-      <div className={`${this.props.className} context-nav`}>
+
+    let trigger;
+    if(this.props.customTrigger) {
+      trigger =(
+        <button className="context-nav__custom-trigger" onClick={this.handleTriggerClick}>
+          {this.props.customTrigger}
+        </button>
+      )
+    }
+    else {
+      trigger = (
         <button className="context-nav__trigger" onClick={this.handleTriggerClick}>
           <svg width="18px" height="18px" viewBox="0 0 76 20" xmlns="http://www.w3.org/2000/svg">
             <circle cx="10" cy="10" r="10"/>
@@ -31,6 +40,14 @@ class ContextNav extends React.Component {
             <circle cx="66" cy="10" r="10"/>
           </svg>
         </button>
+      )
+    }
+
+    let alignmentClass = this.props.align ? `context-nav--${this.props.align}` : null;
+
+    return (
+      <div className={`${this.props.className} context-nav ${alignmentClass}`}>
+        {trigger}
         {this.state.addedToDom &&
           <nav className={this.state.animationStarted ? "context-nav__pop context-nav__pop--init" : "context-nav__pop"}>
             <ul className="context-nav__items">

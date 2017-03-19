@@ -18,6 +18,7 @@
     display:inline-block;
     box-sizing:border-box;
     cursor:pointer;
+
 }
 
 .card__context-nav {
@@ -77,6 +78,7 @@ mix-blend-mode:none;
     }
 }
 .card__background {
+    transition: background 200ms ease;
     position:absolute;
     top:4px;
     left:4px;

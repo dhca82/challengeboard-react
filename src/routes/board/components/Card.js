@@ -3,7 +3,7 @@ import Icon from '../../../components/icon/icon.jsx';
 import ContextNav, { ContextNavItem } from '../../../components/contextnav/contextnav.jsx'
 import './styles/card.scss';
 
-function Card({card, onCardClick, handleDecrement}) {
+function Card({card, toggleCard, handleDecrement}) {
   let cardIcon;
   if(card.isIncremental && card.numberOfCompletions > 0) {
     cardIcon = <div className="card__icon__inner card__icon__inner--number">{card.numberOfCompletions}</div>
@@ -18,7 +18,7 @@ function Card({card, onCardClick, handleDecrement}) {
   }
 
   return (
-    <div className={card.completed ? 'card card--complete' : 'card'} role="button" onClick={onCardClick}>
+    <div className={card.completed ? 'card card--complete' : 'card'} role="button" onClick={toggleCard}>
       <div className="card__background"></div>
       <div className="card__body">
           <div className="card__icon">

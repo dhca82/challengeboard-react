@@ -1,5 +1,6 @@
 .context-nav {
   z-index: 9999;
+  position: relative;
 }
 .context-nav__trigger {
   background:none;
@@ -14,6 +15,14 @@
     fill:rgba(255,255,255,0.3);
     display: block;
   }
+}
+.context-nav__custom-trigger {
+  appearance:none;
+  background:none;
+  border:0;
+  padding:0;
+  margin:0;
+  outline:none;
 }
 @mixin dot {
   border-radius:50%;
@@ -49,7 +58,6 @@
 
 .context-nav__pop {
   opacity: 0;
-
   transition: all 200ms ease-in-out;
   position:absolute;
   z-index: 999;
@@ -72,10 +80,26 @@
     top: -3px;
     background: #4f3e63;
   }
+  .context-nav--right & {
+    left:auto;
+    right:-10px;
+    top:40px;
+    transform:translate(0, 10px);
+    &:after {
+      right:21px;
+      margin-left:0;
+      left:auto;
+    }
+  }
 }
+
+
 .context-nav__pop--init {
     opacity: 1;
     transform:translate(-50%, 4px);
+    .context-nav--right & {
+      transform:translate(0, 4px);
+    }
 }
 .context-nav__items {
   margin:0;

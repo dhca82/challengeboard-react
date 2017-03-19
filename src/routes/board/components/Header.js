@@ -1,5 +1,6 @@
 import React from 'react';
 import Icon from '../../../components/icon/icon.jsx';
+import ContextNav, { ContextNavItem } from '../../../components/contextnav/contextnav.jsx'
 
 import './styles/header.scss';
 
@@ -9,8 +10,26 @@ function Header({
   score,
   isAuthenticated,
   loginHandler,
-  toggleLeaderboardHandler
+  toggleLeaderboardHandler,
+  signOutHandler,
+  boardSlug,
+  profileImage,
+  displayName
 }) {
+
+  let profileTrigger;
+  if(profileImage) {
+    profileTrigger = <img className="header__actions__profile" src={profileImage} width="34" height="34" />
+  }
+  else {
+    profileTrigger = (
+      <div className="header__actions__profile-initials">
+        {displayName.substring(0,2)}
+      </div>
+    )
+  }
+
+
   return (
     <header className="header">
         <div className="header__title">
@@ -28,12 +47,15 @@ function Header({
               <button className="header__actions__icon">
                 <Icon visible={true} name="bell" />
               </button>
-              <img className="header__actions__profile" src="/images/profile.png" width="34" height="34" />
+              <ContextNav className="header__actions__profile" customTrigger={profileTrigger} align="right">
+                <ContextNavItem text="Inställningar" />
+                <ContextNavItem text="Logga ut" handler={signOutHandler} />
+              </ContextNav>
             </div>
           }
           {!isAuthenticated &&
             <div className="header__actions">
-              <button className="button button--outline button--small" onClick={loginHandler}>Logga in</button>
+              <a href={`#/${boardSlug}/signin`} className="button button--outline button--small">Logga in</a>
             </div>
           }
     </header>
